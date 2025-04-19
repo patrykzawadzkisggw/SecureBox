@@ -3,7 +3,12 @@ const cors = require('cors');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const passwordRoutes = require('./routes/passwords');
+const https = require('https');
+const fs = require('fs');
 
+const privateKey = fs.readFileSync('./certs/server.key', 'utf8');
+const certificate = fs.readFileSync('./certs/server.crt', 'utf8');
+const credentials = { key: privateKey, cert: certificate };
 const app = express();
 
 const allowedOrigins = [
@@ -31,6 +36,7 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+const server = https.createServer(credentials, app);
+server.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });
