@@ -15,6 +15,7 @@ const allowedOrigins = [
   'http://localhost:5173',
   'chrome-extension://klaeffpcfgikkahmjkbjklejbifbcffi',
   'http://localhost:8000',
+  'https://securebox.netlify.app'
 ];
 
 app.use(
